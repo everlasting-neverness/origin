@@ -16,7 +16,20 @@
   let app = document.getElementById('TodosApp');
   app.innerHTML = initialTemplate;
 
-  const todos = [
+  function generateId(todos) {
+  let out = [];
+  for (let x = 0; x < todos.length; x++) {
+    let n = {};
+    n.id = x; // or + 1 for normal DB
+    n.content = todos[x].content;
+    n.checked = todos[x].checked;
+    out.push(n);
+    }
+  todos = out;
+  return todos;
+  }
+
+  var todos = [
     // {
     //   checked: true,
     //   content: 'hello world',
@@ -27,6 +40,8 @@
     // }
   ];
 
+  window.todos = todos;
+
   function clearList(list) {
     while (list.children.length != 0) {
 	      list.firstChild.remove();
@@ -34,19 +49,28 @@
   };
 
   function renderList(list) {
+    clearList(list);
+    todos = generateId(todos);
     for (let item = 0; item < todos.length; item++) {
         let li = document.createElement('li');
         li.setAttribute('class', 'list-item');
+        li.setAttribute('id', String(item));
         let sp = getToggler();
         let text = document.createTextNode(todos[item].content + ' ');
         li.innerHTML = sp;
         li.firstChild.appendChild(text);
         let but = document.createElement('button');
         but.innerHTML = '&times;';
-        but.addEventListener('click', removeElement(but));
+        but.addEventListener('click', function() {
+          let todos_id = but.parentElement.id;
+          deleteId(todos, todos_id);
+          // removeElement(delButton[i]);
+          renderList(list);
+        });
         li.appendChild(but);
         list.appendChild(li);
     }
+
   };
 
 
@@ -71,7 +95,6 @@
     event.preventDefault();
     let list = document.querySelector('.list');
     let form = document.querySelector('form');
-    clearList(list);
     let input = form.elements.info;
     let newTodoEntry = {
       checked: false,
@@ -96,10 +119,26 @@
     form.reset();
   })
 
-  let delButton = document.querySelectorAll('ul button');
-  for (let i = 0; i < delButton.length; i++) {
-    delButton[i].addEventListener('click', removeElement (delButton[i]));
+
+  function deleteId(arr, id) {
+  for (let x = 0; x < arr.length; x++) {
+    if (arr[x].id == id)
+      arr.splice(x, 1);
+    }
+  return arr;
   }
+
+  // let delButton = document.querySelectorAll('ul button');
+  // for (let i = 0; i < delButton.length; i++) {
+  //   delButton[i].addEventListener('click', function() {
+  //     let list = document.querySelector('.list');
+  //     let todos_id = delButton[i].parentElement.id;
+  //     deleteId(todos, todos_id);
+  //     // removeElement(delButton[i]);
+  //     renderList(list);
+  //
+  //   });
+  // }
 })()
 
 
