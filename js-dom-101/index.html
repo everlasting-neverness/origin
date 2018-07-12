@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+    }
+    .btn {
+      border: none;
+      background-color: magenta;
+      color: white;
+      padding: 0;
+    }
+    .btn span {
+      display: inline-block;
+      border: 1px dashed white;
+      margin: 10px;
+      padding: 10px;
+    }
+
+    .section {
+      width: 100%;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .panel {
+      background-color: white;
+
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    .panel-heading {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .panel-body {
+      padding: 50px 20px;
+    }
+
+    .section > div {
+      display: inline-block;
+      width: 30%;
+    }
+    .section > div + div {
+      margin-left: 10px;
+    }
+
+    .select > select {
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+    }
+
+    .select {
+      position: relative;
+      border: 2px solid #ccc;
+      border-radius: 100px;
+    }
+
+    .select--focused {
+      border-color: magenta;
+    }
+    /* select:focus ~ span {
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid magenta;
+      border-radius: 100px;
+    } */
+  </style>
+</head>
+<body>
+
+  <p>Hello</p>
+  <p>World</p>
+
+  <button class="select-toggler">toggle select</button>
+  <form>
+    <input type="text" name="info" />
+    <button>save</button>
+    <div class="select-area">
+      <div class="select">
+        <select name="selector" id="">
+          <option value="1">none</option>
+          <option value="2">two</option>
+          <option value="3">three</option>
+        </select>
+        <span></span>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="main">
+    <h1 id="current-result">
+      <i>nothing yet...</i>
+    </h1>
+  </div>
+
+  <ul class="list">
+    <li>first...</li>
+  </ul>
+
+  <script type="text/javascript">
+    const weatherData = {
+      moscow: { temperature: 23, type: "sunny" },
+      london: { temperature: 11, type: "cloudy" }
+    };
+  </script>
+  <script src="add-tag.js"></script>
+  <script src="select-styling.js"></script>
+</body>
+</html>
