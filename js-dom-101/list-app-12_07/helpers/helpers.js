@@ -6,6 +6,6 @@
     return realremove;
   }
 
-  console.log('removeElement');
+  // console.log('removeElement');
   window.removeElement = removeElement;
 })();

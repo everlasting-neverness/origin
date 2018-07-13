@@ -8,9 +8,9 @@
     <ul class="list">
 
     </ul>
-    <div>
-      completed: N
-      not completed: N
+    <div class="counters">
+      <span class="completed">completed: <span class="counter">0</span></span>
+      <span class="notCompleted">not completed: <span class="counter">0</span></span>
     </div>
   `;
   let app = document.getElementById('TodosApp');
@@ -48,6 +48,13 @@
       }
   };
 
+  function getElFromTodos(id) {
+    for (let x = 0; x , todos.length; x++) {
+      if (todos[x].id == id)
+        return todos[x];
+    }
+  }
+
   function renderList(list) {
     clearList(list);
     todos = generateId(todos);
@@ -58,6 +65,19 @@
         let sp = getToggler();
         let text = document.createTextNode(todos[item].content + ' ');
         li.innerHTML = sp;
+        // console.log(li);
+        let checkbox = li.querySelector('.toggler input');
+        let tick = li.querySelector('.toggler .tick');
+        tick.addEventListener('click', function() {
+            let el = getElFromTodos(li.id);
+            el.checked = !checkbox.checked;
+            // renderList(list);
+        });
+        // if (todos[item].checked == true)
+        //   tick.setAttribute('style','opacity: 1;');
+        // else if (todos[item].checked == false)
+        //   tick.setAttribute('style','opacity: 0;');
+        // console.log(todos[item]);
         li.firstChild.appendChild(text);
         let but = document.createElement('button');
         but.innerHTML = '&times;';
@@ -69,8 +89,9 @@
         });
         li.appendChild(but);
         list.appendChild(li);
-    }
-
+    };
+    counter('notCompl');
+    counter('compl');
   };
 
 
@@ -89,7 +110,6 @@
   };
 
 
-
   let button = document.querySelector('button');
   button.addEventListener('click', function (event) {
     event.preventDefault();
@@ -101,20 +121,6 @@
       content: input.value,
     }
     todos.unshift(newTodoEntry);
-    // let listElement = list.firstElementChild;
-    // let li = document.createElement('li');
-    // li.setAttribute('class', 'list-item');
-    // let sp = getToggler();
-    // let text = document.createTextNode(input.value + ' ');
-    // li.innerHTML = sp;
-    // li.firstChild.appendChild(text);
-    // // li.appendChild(inn);
-    // // li.appendChild(text);
-    // let but = document.createElement('button');
-    // but.innerHTML = '&times;';
-    // but.addEventListener('click', removeElement(but));
-    // li.appendChild(but);
-    // list.appendChild(li);
     renderList(list);
     form.reset();
   })
@@ -128,6 +134,21 @@
   return arr;
   }
 
+  function counter(arg) {
+    let init, bool;
+    if (arg == 'compl') {
+      init = '.completed .counter';
+      bool = true; }
+    else {
+      init = '.notCompleted .counter';
+      bool = false; }
+    let sp = document.querySelector(init), count = 0;
+    for (let x = 0; x < todos.length; x++) {
+      if (todos[x].checked == bool)
+        count += 1;
+    };
+    sp.innerText = count;
+  }
   // let delButton = document.querySelectorAll('ul button');
   // for (let i = 0; i < delButton.length; i++) {
   //   delButton[i].addEventListener('click', function() {
