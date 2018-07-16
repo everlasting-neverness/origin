@@ -13,32 +13,24 @@
       <span class="notCompleted">not completed: <span class="counter">0</span></span>
     </div>
   `;
+
   let app = document.getElementById('TodosApp');
   app.innerHTML = initialTemplate;
 
   function generateId(todos) {
-  let out = [];
-  for (let x = 0; x < todos.length; x++) {
-    let n = {};
-    n.id = x; // or + 1 for normal DB
-    n.content = todos[x].content;
-    n.checked = todos[x].checked;
-    out.push(n);
-    }
-  todos = out;
-  return todos;
+    let out = [];
+    for (let x = 0; x < todos.length; x++) {
+      let n = {};
+      n.id = x;
+      n.content = todos[x].content;
+      n.checked = todos[x].checked;
+      out.push(n);
+      }
+    todos = out;
+    return todos;
   }
 
-  var todos = [
-    // {
-    //   checked: true,
-    //   content: 'hello world',
-    // },
-    // {
-    //   checked: false,
-    //   content: 'second task',
-    // }
-  ];
+  var todos = [];
 
   window.todos = todos;
 
@@ -71,20 +63,20 @@
         tick.addEventListener('click', function() {
             let el = getElFromTodos(li.id);
             el.checked = !checkbox.checked;
-            // renderList(list);
+            renderList(list);
         });
-        // if (todos[item].checked == true)
-        //   tick.setAttribute('style','opacity: 1;');
-        // else if (todos[item].checked == false)
-        //   tick.setAttribute('style','opacity: 0;');
-        // console.log(todos[item]);
+        if (todos[item].checked == true)
+          tick.setAttribute('style','opacity: 1;');
+        else if (todos[item].checked == false)
+          tick.setAttribute('style','opacity: 0;');
+        checkbox.checked = todos[item].checked;
+        console.log(todos[item]);
         li.firstChild.appendChild(text);
         let but = document.createElement('button');
         but.innerHTML = '&times;';
         but.addEventListener('click', function() {
           let todos_id = but.parentElement.id;
           deleteId(todos, todos_id);
-          // removeElement(delButton[i]);
           renderList(list);
         });
         li.appendChild(but);
@@ -93,7 +85,6 @@
     counter('notCompl');
     counter('compl');
   };
-
 
   let listStarter = document.querySelector('.list');
   renderList(listStarter);
@@ -109,29 +100,27 @@
             </span>`;
   };
 
-
   let button = document.querySelector('button');
-  button.addEventListener('click', function (event) {
-    event.preventDefault();
-    let list = document.querySelector('.list');
-    let form = document.querySelector('form');
-    let input = form.elements.info;
-    let newTodoEntry = {
-      checked: false,
-      content: input.value,
-    }
-    todos.unshift(newTodoEntry);
-    renderList(list);
-    form.reset();
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      let list = document.querySelector('.list');
+      let form = document.querySelector('form');
+      let input = form.elements.info;
+      let newTodoEntry = {
+        checked: false,
+        content: input.value,
+      }
+      todos.unshift(newTodoEntry);
+      renderList(list);
+      form.reset();
   })
 
-
   function deleteId(arr, id) {
-  for (let x = 0; x < arr.length; x++) {
-    if (arr[x].id == id)
-      arr.splice(x, 1);
-    }
-  return arr;
+    for (let x = 0; x < arr.length; x++) {
+      if (arr[x].id == id)
+        arr.splice(x, 1);
+      }
+    return arr;
   }
 
   function counter(arg) {
@@ -149,38 +138,4 @@
     };
     sp.innerText = count;
   }
-  // let delButton = document.querySelectorAll('ul button');
-  // for (let i = 0; i < delButton.length; i++) {
-  //   delButton[i].addEventListener('click', function() {
-  //     let list = document.querySelector('.list');
-  //     let todos_id = delButton[i].parentElement.id;
-  //     deleteId(todos, todos_id);
-  //     // removeElement(delButton[i]);
-  //     renderList(list);
-  //
-  //   });
-  // }
 })()
-
-
-// <li class="list-item">
-//   <span>
-//     ${getToggler()}
-//     first...
-//   </span>
-//   <button>&times;</button>
-// </li>
-// <li class="list-item">
-//   <span>
-//     ${getToggler()}
-//     second...
-//   </span>
-//   <button>&times;</button>
-// </li>
-// <li class="list-item">
-//   <span>
-//     ${getToggler()}
-//     something ele
-//   </span>
-//   <button>&times;</button>
-// </li>
